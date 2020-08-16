@@ -1,11 +1,12 @@
 package club.chachy.mytestgame.engine.loader
 
-import club.chachy.mytestgame.engine.modelling.RawModel
+import club.chachy.mytestgame.engine.models.RawModel
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL15
 import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL30
+import org.newdawn.slick.opengl.TextureLoader
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
 
@@ -13,6 +14,7 @@ class Loader {
 
     private val vaos = mutableListOf<Int>()
     private val vbos = mutableListOf<Int>()
+    private val textures = mutableListOf<Int>()
 
     fun loadToVAO(positions: FloatArray, indices: IntArray): RawModel {
         val vaoID = createVAO()
@@ -22,6 +24,13 @@ class Loader {
         return RawModel(vaoID, indices.size)
     }
 
+    fun loadTexture(fileName: String) : Int {
+        val texture = TextureLoader.getTexture("PNG", javaClass.getResourceAsStream("/$fileName"))
+        val textureID = texture.textureID
+        textures.add(textureID)
+        return textureID
+    }
+
     fun cleanup() {
         vaos.forEach {
             GL30.glDeleteVertexArrays(it)
@@ -29,6 +38,10 @@ class Loader {
 
         vbos.forEach {
             GL15.glDeleteBuffers(it)
+        }
+
+        textures.forEach {
+            GL11.glDeleteTextures(it)
         }
     }
 

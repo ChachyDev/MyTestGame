@@ -1,8 +1,11 @@
 package club.chachy.mytestgame
 
 import club.chachy.mytestgame.engine.loader.Loader
+import club.chachy.mytestgame.engine.models.TexturedModel
 import club.chachy.mytestgame.engine.renderer.Renderer
+import club.chachy.mytestgame.engine.textures.ModelTexture
 import club.chachy.mytestgame.manager.DisplayManager
+import club.chachy.mytestgame.shaders.StaticShader
 import org.lwjgl.opengl.Display
 
 fun main() {
@@ -10,6 +13,7 @@ fun main() {
 
     val loader = Loader()
     val renderer = Renderer()
+    val staticShader = StaticShader()
 
     val vertices = floatArrayOf(
         -0.5f, 0.5f, 0f,//v0
@@ -24,13 +28,18 @@ fun main() {
     )
 
     val model = loader.loadToVAO(vertices, indices)
+    val texture = ModelTexture(loader.loadTexture("texture.png"))
+    val texturedModel = TexturedModel(model, texture)
 
     while (!Display.isCloseRequested()) {
         renderer.prepare()
-        renderer.render(model)
+        staticShader.start()
+        renderer.render(texturedModel)
+        staticShader.stop()
         DisplayManager.updateDisplay()
     }
 
+    staticShader.cleanup()
     loader.cleanup()
     DisplayManager.closeDisplay()
 }

@@ -1,6 +1,7 @@
 package club.chachy.mytestgame.engine.renderer
 
-import club.chachy.mytestgame.engine.modelling.RawModel
+import club.chachy.mytestgame.engine.models.RawModel
+import club.chachy.mytestgame.engine.models.TexturedModel
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL30
@@ -11,7 +12,8 @@ class Renderer {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT)
     }
 
-    fun render(model: RawModel) {
+    fun render(texturedModel: TexturedModel) {
+        val model = texturedModel.rawModel
         GL30.glBindVertexArray(model.vaoID)
         GL20.glEnableVertexAttribArray(0)
         GL11.glDrawElements(GL11.GL_TRIANGLES, model.vertexCount, GL11.GL_UNSIGNED_INT, 0)
