@@ -9,8 +9,8 @@ object DisplayManager {
 
     fun createDisplay() {
         val attribs = ContextAttribs(3, 2)
-        attribs.withForwardCompatible(true)
-        attribs.withProfileCore(true)
+            .withForwardCompatible(true)
+            .withProfileCore(true)
 
         Display.setDisplayMode(
             DisplayMode(

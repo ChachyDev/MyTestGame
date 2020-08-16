@@ -1,12 +1,14 @@
 package club.chachy.mytestgame
 
 import club.chachy.mytestgame.engine.loader.Loader
-import club.chachy.mytestgame.engine.models.TexturedModel
 import club.chachy.mytestgame.engine.renderer.Renderer
 import club.chachy.mytestgame.engine.textures.ModelTexture
+import club.chachy.mytestgame.entities.Entity
 import club.chachy.mytestgame.manager.DisplayManager
+import club.chachy.mytestgame.models.TexturedModel
 import club.chachy.mytestgame.shaders.StaticShader
 import org.lwjgl.opengl.Display
+import org.lwjgl.util.vector.Vector3f
 
 fun main() {
     DisplayManager.createDisplay()
@@ -29,11 +31,12 @@ fun main() {
     val model = loader.loadToVAO(vertices, textureCoords, indices)
     val texture = ModelTexture(loader.loadTexture("texture.png"))
     val texturedModel = TexturedModel(model, texture)
+    val entity = Entity(texturedModel, Vector3f(-1f, 0f, 0f), 0f, 0f, 0f, 1f)
 
     while (!Display.isCloseRequested()) {
         renderer.prepare()
         staticShader.start()
-        renderer.render(texturedModel)
+        renderer.render(entity, staticShader)
         staticShader.stop()
         DisplayManager.updateDisplay()
     }

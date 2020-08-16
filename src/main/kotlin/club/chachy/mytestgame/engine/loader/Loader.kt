@@ -1,6 +1,6 @@
 package club.chachy.mytestgame.engine.loader
 
-import club.chachy.mytestgame.engine.models.RawModel
+import club.chachy.mytestgame.models.RawModel
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL15
@@ -25,7 +25,7 @@ class Loader {
         return RawModel(vaoID, indices.size)
     }
 
-    fun loadTexture(fileName: String) : Int {
+    fun loadTexture(fileName: String): Int {
         val texture = TextureLoader.getTexture("PNG", javaClass.getResourceAsStream("/$fileName"))
         val textureID = texture.textureID
         textures.add(textureID)

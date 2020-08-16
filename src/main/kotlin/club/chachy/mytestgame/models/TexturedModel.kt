@@ -1,4 +1,4 @@
-package club.chachy.mytestgame.engine.models
+package club.chachy.mytestgame.models
 
 import club.chachy.mytestgame.engine.textures.ModelTexture
 
