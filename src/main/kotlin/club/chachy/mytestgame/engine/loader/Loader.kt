@@ -16,10 +16,11 @@ class Loader {
     private val vbos = mutableListOf<Int>()
     private val textures = mutableListOf<Int>()
 
-    fun loadToVAO(positions: FloatArray, indices: IntArray): RawModel {
+    fun loadToVAO(positions: FloatArray, textureCoords: FloatArray, indices: IntArray): RawModel {
         val vaoID = createVAO()
         bindIndicesBuffer(indices)
-        storeDataInAttributesList(0, positions)
+        storeDataInAttributesList(0, 3, positions)
+        storeDataInAttributesList(1, 3, textureCoords)
         unbindVAO()
         return RawModel(vaoID, indices.size)
     }
@@ -52,13 +53,13 @@ class Loader {
         return vaoID
     }
 
-    private fun storeDataInAttributesList(attributeNumber: Int, data: FloatArray) {
+    private fun storeDataInAttributesList(attributeNumber: Int, coordinateSize: Int, data: FloatArray) {
         val vboID = GL15.glGenBuffers()
         vbos.add(vboID)
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID)
         val buffer = storeDataInFloatBuffer(data)
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW)
-        GL20.glVertexAttribPointer(attributeNumber, 3, GL11.GL_FLOAT, false, 0, 0)
+        GL20.glVertexAttribPointer(attributeNumber, coordinateSize, GL11.GL_FLOAT, false, 0, 0)
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
     }
 

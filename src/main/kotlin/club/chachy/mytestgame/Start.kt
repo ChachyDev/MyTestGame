@@ -22,12 +22,11 @@ fun main() {
         0.5f, 0.5f, 0f//v3
     )
 
-    val indices = intArrayOf(
-        0, 1, 3,
-        3, 1, 2
-    )
+    val indices = intArrayOf(0, 1, 3, 3, 1, 2)
 
-    val model = loader.loadToVAO(vertices, indices)
+    val textureCoords = floatArrayOf(0f, 0f, 0f, 1f, 1f, 1f, 1f, 0f)
+
+    val model = loader.loadToVAO(vertices, textureCoords, indices)
     val texture = ModelTexture(loader.loadTexture("texture.png"))
     val texturedModel = TexturedModel(model, texture)
 
