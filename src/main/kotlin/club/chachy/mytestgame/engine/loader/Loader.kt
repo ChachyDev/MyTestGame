@@ -20,7 +20,7 @@ class Loader {
         val vaoID = createVAO()
         bindIndicesBuffer(indices)
         storeDataInAttributesList(0, 3, positions)
-        storeDataInAttributesList(1, 3, textureCoords)
+        storeDataInAttributesList(1, 2, textureCoords)
         unbindVAO()
         return RawModel(vaoID, indices.size)
     }
