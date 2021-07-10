@@ -1,39 +1,46 @@
 package club.chachy.mytestgame.manager
 
-import org.lwjgl.opengl.*
+import org.lwjgl.glfw.GLFW.*
+import org.lwjgl.opengl.GL
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.system.MemoryUtil.NULL
+
 
 object DisplayManager {
-    private const val width = 1280
-    private const val height = 720
+    private const val WIDTH = 1280
+    private const val HEIGHT = 720
     private const val fpsCap = 120
 
+    var window: Long = 999
+
     fun createDisplay() {
-        val attribs = ContextAttribs(3, 2)
-            .withForwardCompatible(true)
-            .withProfileCore(true)
+        if (!glfwInit()) {
+            error("Failed to initialize GLFW")
+        }
 
-        Display.setDisplayMode(
-            DisplayMode(
-                width,
-                height
-            )
-        )
-        Display.create(PixelFormat(), attribs)
-        Display.setTitle("Osorio")
+        glfwWindowHint(GLFW_RESIZABLE, GL_TRUE)
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4)
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3)
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE)
 
-        GL11.glViewport(
-            0, 0,
-            width,
-            height
-        )
+        window = glfwCreateWindow(WIDTH, HEIGHT, "Osorio", NULL, NULL).takeIf { it != NULL }
+            ?: error("Failed to create GLFW window")
+
+        val videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor()) ?: error("Failed to get video mode")
+
+        glfwSetWindowPos(window, (videoMode.width() - WIDTH) / 2, (videoMode.height() - HEIGHT) / 2)
+
+        glfwMakeContextCurrent(window)
+        GL.createCapabilities()
+        glfwShowWindow(window)
     }
 
     fun updateDisplay() {
-        Display.sync(fpsCap)
-        Display.update()
+        glfwSwapBuffers(window)
+        glfwPollEvents()
     }
 
     fun closeDisplay() {
-        Display.destroy()
+        glfwTerminate()
     }
 }

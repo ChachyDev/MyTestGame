@@ -1,3 +1,3 @@
 package club.chachy.mytestgame.models
 
-class RawModel(val vaoID: Int, val vertexCount: Int)
+data class RawModel(val vaoID: Int, val vertexCount: Int)

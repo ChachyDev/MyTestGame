@@ -1,11 +1,14 @@
 package club.chachy.mytestgame.shaders
 
-import org.lwjgl.util.vector.Matrix4f
+import org.joml.Matrix4f
 import java.io.File
 
 class StaticShader : ShaderProgram(
-    File(StaticShader::class.java.getResource("/vertexShader.vert").toURI()),
-    File(StaticShader::class.java.getResource("/fragmentShader.frag").toURI())
+    File(StaticShader::class.java.getResource("/vertexShader.vert")?.toURI() ?: error("Could not find Vertex Shader")),
+    File(
+        StaticShader::class.java.getResource("/fragmentShader.frag")?.toURI()
+            ?: error("Could not find Fragment shader :(")
+    )
 ) {
     private var locationTransformationMatrix = 0
 

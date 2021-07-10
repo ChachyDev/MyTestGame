@@ -1,14 +1,15 @@
 package club.chachy.mytestgame.shaders
 
 import club.chachy.mytestgame.utils.ext.toFloat
+import org.joml.Matrix4f
+import org.joml.Vector3f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL20
-import org.lwjgl.util.vector.Matrix4f
-import org.lwjgl.util.vector.Vector3f
 import java.io.File
 import kotlin.system.exitProcess
 
+@Suppress("LeakingThis")
 abstract class ShaderProgram(vertexFile: File, fragmentFile: File) {
 
     private val vertexShaderID: Int
@@ -65,9 +66,9 @@ abstract class ShaderProgram(vertexFile: File, fragmentFile: File) {
     }
 
     protected fun loadMatrix(location: Int, matrix: Matrix4f) {
-        matrix.store(matrixBuffer)
+        matrix.set(matrixBuffer)
         matrixBuffer.flip()
-        GL20.glUniformMatrix4(location, false, matrixBuffer)
+        GL20.glUniformMatrix4fv(location, false, matrixBuffer)
     }
 
     private fun loadShader(file: File, type: Int): Int {

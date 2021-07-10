@@ -1,20 +1,19 @@
 package club.chachy.mytestgame.engine.loader
 
+import club.chachy.mytestgame.engine.loader.texture.TextureLoader
 import club.chachy.mytestgame.models.RawModel
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL15
 import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL30
-import org.newdawn.slick.opengl.TextureLoader
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
 
 class Loader {
-
-    private val vaos = mutableListOf<Int>()
-    private val vbos = mutableListOf<Int>()
-    private val textures = mutableListOf<Int>()
+    private val vaos = ArrayList<Int>()
+    private val vbos = ArrayList<Int>()
+    private val textures = ArrayList<Int>()
 
     fun loadToVAO(positions: FloatArray, textureCoords: FloatArray, indices: IntArray): RawModel {
         val vaoID = createVAO()
@@ -26,8 +25,8 @@ class Loader {
     }
 
     fun loadTexture(fileName: String): Int {
-        val texture = TextureLoader.getTexture("PNG", javaClass.getResourceAsStream("/$fileName"))
-        val textureID = texture.textureID
+        val texture = TextureLoader.loadPNGTexture(fileName)
+        val textureID = texture.id
         textures.add(textureID)
         return textureID
     }
@@ -57,8 +56,7 @@ class Loader {
         val vboID = GL15.glGenBuffers()
         vbos.add(vboID)
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID)
-        val buffer = storeDataInFloatBuffer(data)
-        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW)
+        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, data.toFloatBuffer(), GL15.GL_STATIC_DRAW)
         GL20.glVertexAttribPointer(attributeNumber, coordinateSize, GL11.GL_FLOAT, false, 0, 0)
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
     }
@@ -72,20 +70,19 @@ class Loader {
         vbos.add(vboID)
 
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID)
-        val buffer = storeDataInIntBuffer(indices)
-        GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW)
+        GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, indices.toIntBuffer(), GL15.GL_STATIC_DRAW)
     }
 
-    private fun storeDataInIntBuffer(data: IntArray): IntBuffer {
-        val buffer = BufferUtils.createIntBuffer(data.size)
-        buffer.put(data)
+    private fun IntArray.toIntBuffer(): IntBuffer {
+        val buffer = BufferUtils.createIntBuffer(size)
+        buffer.put(this)
         buffer.flip()
         return buffer
     }
 
-    private fun storeDataInFloatBuffer(data: FloatArray): FloatBuffer {
-        val buffer = BufferUtils.createFloatBuffer(data.size)
-        buffer.put(data)
+    private fun FloatArray.toFloatBuffer(): FloatBuffer {
+        val buffer = BufferUtils.createFloatBuffer(size)
+        buffer.put(this)
         buffer.flip()
         return buffer
     }

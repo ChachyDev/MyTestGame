@@ -1,7 +1,7 @@
 package club.chachy.mytestgame.entities
 
 import club.chachy.mytestgame.models.TexturedModel
-import org.lwjgl.util.vector.Vector3f
+import org.joml.Vector3f
 
 class Entity(
     val model: TexturedModel,
@@ -23,5 +23,4 @@ class Entity(
         rotY += dy
         rotZ += dz
     }
-
 }
