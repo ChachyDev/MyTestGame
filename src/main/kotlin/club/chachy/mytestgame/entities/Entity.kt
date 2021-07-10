@@ -6,10 +6,10 @@ import org.joml.Vector3f
 class Entity(
     val model: TexturedModel,
     val position: Vector3f,
-    var rotX: Float,
-    var rotY: Float,
-    var rotZ: Float,
-    val scale: Float
+    var rotX: Float = 0f,
+    var rotY: Float = 0f,
+    var rotZ: Float = 0f,
+    val scale: Float = 1f
 ) {
 
     fun increasePosition(dx: Float, dy: Float, dz: Float) {

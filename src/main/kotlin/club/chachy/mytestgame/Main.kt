@@ -2,7 +2,6 @@ package club.chachy.mytestgame
 
 import club.chachy.mytestgame.engine.loader.Loader
 import club.chachy.mytestgame.engine.renderer.EntityRenderer
-import club.chachy.mytestgame.engine.textures.ModelTexture
 import club.chachy.mytestgame.entities.Entity
 import club.chachy.mytestgame.manager.DisplayManager
 import club.chachy.mytestgame.models.TexturedModel
@@ -28,12 +27,12 @@ fun main() {
 
     val textureCoords = floatArrayOf(0f, 0f, 0f, 1f, 1f, 1f, 1f, 0f)
 
-    val model = loader.loadToVAO(vertices, textureCoords, indices)
-    val texture = ModelTexture(loader.loadTexture("texture.png"))
-    val texturedModel = TexturedModel(model, texture)
-    val entity = Entity(texturedModel, Vector3f(30f, 0f, 0f), 0f, 0f, 0f, 1f)
+    val entity = Entity(
+        TexturedModel(loader.loadToVAO(vertices, textureCoords, indices), loader.loadTexture("images/texture.png")),
+        Vector3f(30f, 0f, 0f)
+    )
 
-    while (!glfwWindowShouldClose(DisplayManager.window))  {
+    while (!glfwWindowShouldClose(DisplayManager.window)) {
         renderer.prepare()
         staticShader.start()
         renderer.render(entity, staticShader)

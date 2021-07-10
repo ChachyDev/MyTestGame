@@ -4,9 +4,9 @@ import org.joml.Matrix4f
 import java.io.File
 
 class StaticShader : ShaderProgram(
-    File(StaticShader::class.java.getResource("/vertexShader.vert")?.toURI() ?: error("Could not find Vertex Shader")),
+    File(StaticShader::class.java.getResource("/shaders/vertexShader.vert")?.toURI() ?: error("Could not find Vertex Shader")),
     File(
-        StaticShader::class.java.getResource("/fragmentShader.frag")?.toURI()
+        StaticShader::class.java.getResource("/shaders/fragmentShader.frag")?.toURI()
             ?: error("Could not find Fragment shader :(")
     )
 ) {

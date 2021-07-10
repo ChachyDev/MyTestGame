@@ -1,6 +1,7 @@
 package club.chachy.mytestgame.engine.loader
 
 import club.chachy.mytestgame.engine.loader.texture.TextureLoader
+import club.chachy.mytestgame.engine.textures.ModelTexture
 import club.chachy.mytestgame.models.RawModel
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11
@@ -24,11 +25,10 @@ class Loader {
         return RawModel(vaoID, indices.size)
     }
 
-    fun loadTexture(fileName: String): Int {
+    fun loadTexture(fileName: String): ModelTexture {
         val texture = TextureLoader.loadPNGTexture(fileName)
-        val textureID = texture.id
-        textures.add(textureID)
-        return textureID
+        textures.add(texture.id)
+        return ModelTexture(texture.id)
     }
 
     fun cleanup() {
