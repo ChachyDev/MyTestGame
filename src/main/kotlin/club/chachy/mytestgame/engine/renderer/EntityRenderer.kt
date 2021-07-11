@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL30
 
 class EntityRenderer {
     fun prepare() {
-        GL11.glClearColor(1f, 0f, 0f, 1f)
+        GL11.glClearColor(0f, 1f, 0f, 1f)
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT)
     }
 

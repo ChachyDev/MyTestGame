@@ -30,16 +30,16 @@ abstract class ShaderProgram(vertexFile: File, fragmentFile: File) {
         getAllUniformLocations()
     }
 
-    fun start() {
+    fun apply() {
         GL20.glUseProgram(programID)
     }
 
-    fun stop() {
+    fun disable() {
         GL20.glUseProgram(0)
     }
 
     fun cleanup() {
-        stop()
+        disable()
         GL20.glDetachShader(programID, vertexShaderID)
         GL20.glDetachShader(programID, fragmentShaderID)
         GL20.glDeleteShader(vertexShaderID)

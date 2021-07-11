@@ -34,9 +34,11 @@ fun main() {
 
     while (!glfwWindowShouldClose(DisplayManager.window)) {
         renderer.prepare()
-        staticShader.start()
+
+        staticShader.apply()
         renderer.render(entity, staticShader)
-        staticShader.stop()
+        staticShader.disable()
+
         DisplayManager.updateDisplay()
     }
 
